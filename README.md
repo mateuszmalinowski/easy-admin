@@ -8,7 +8,7 @@ A bunch of files that simplify my administrative work including quicker navigati
 ### Dots 
 
 Configuration of my bash.
-It uses a script sshcd.bash that ssh to a remote machine and cd to the current path (the remote machine must have an access to the current path visible on local machine). This script is handy if working on a Distributed File System. The usage is the same as ssh: sshcd login@remote.
+It uses a script sshcd.bash that ssh to a remote machine and cd to the current path (the remote machine must have an access to the current path visible on the local machine). This script is handy if working on a Distributed File System. The usage is the same as ssh: sshcd login@remote.
 
 ### Notification Daemon
 
