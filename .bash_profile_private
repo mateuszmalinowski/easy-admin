@@ -1,0 +1,79 @@
+# this is a place to put your private .bash_profile settings
+
+# fast navigation
+# from
+# http://jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html
+export MARKPATH=$HOME/.marks
+
+function jump 
+{
+    cd -P "$MARKPATH/$1" 2>/dev/null || echo "no such mark"
+}
+
+function mark 
+{
+    mkdir -p "$MARKPATH"; ln -s "$PWD" "$MARKPATH/$1"
+}
+
+function unmark 
+{
+    rm "$MARKPATH/$1"
+}
+
+function marks 
+{
+    ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' && echo 
+
+    # for MAC OS users
+    #ls -l "$MARKPATH" | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
+}
+
+_completemarks() 
+{
+    local curw=${COMP_WORDS[COMP_CWORD]}
+    #local wordlist=$(find $MARKPATH -type l -printf "%f\n")
+    local wordlist=$(find $MARKPATH -type l -exec basename {} \;)
+
+    COMPREPLY=($(compgen -W '${wordlist[@]}' -- "$curw"))
+    return 0
+}
+
+complete -F _completemarks jump unmark 
+# fast navigation
+
+# copy with marks
+# Mateusz Malinowski
+function cp2mark 
+{
+    cp "$1" "$MARKPATH/$2"
+}
+
+function mark2now 
+{
+    cp -L "$MARKPATH/$1" "$PWD"
+}
+#
+
+# change directory with listing the files
+# from Song Zheng (quora)
+alias lcd=changeDirWithListing
+function changeDirWithListing 
+{
+    cd $1; ls -la
+}
+# change directory
+
+# go back n times 
+alias cdn=cd_n_times_back
+function cd_n_times_back 
+{
+    cmd=""
+    for (( i=0; i < $1; i++))
+    do
+        cmd="$cmd../"
+    done
+    cd "$cmd"
+}
+
+# alias to sshcd
+alias sshcd=sshcd.bash
