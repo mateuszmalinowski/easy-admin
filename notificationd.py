@@ -44,7 +44,7 @@ class NotificationDaemon(Daemon):
     @staticmethod
     def send_message(name,userlogin,title,content):
         recipient=userlogin
-        sender="mmalinow@mpi-inf.mpg.de"
+        sender="sender@email"
         cc=sender
 
         msg=MIMEMultipart('alternative')
